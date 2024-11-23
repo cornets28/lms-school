@@ -1,0 +1,198 @@
+{
+    "grades": [
+        {
+            "id": 1,
+            "grade": "NS1",
+            "total_price": 300453,
+            "first_down": 30403,
+            "second_down": 30403,
+            "third_down": 10403
+        },
+        {
+            "id": 2,
+            "grade": "NS2",
+            "total_price": 300453,
+            "first_down": 30403,
+            "second_down": 30403,
+            "third_down": 10403
+        },
+        {
+            "id": 3,
+            "grade": "NS3",
+            "total_price": 440453,
+            "first_down": 30403,
+            "second_down": 30403,
+            "third_down": 10403
+        },
+        {
+            "id": 4,
+            "grade": "NS4",
+            "total_price": 550453,
+            "first_down": 30403,
+            "second_down": 30403,
+            "third_down": 10403
+        },
+        {
+            "id": 5,
+            "grade": "6AF",
+            "total_price": 660453,
+            "first_down": 3403,
+            "second_down": 4403,
+            "third_down": 10403
+        },
+        {
+            "id": 6,
+            "grade": "5AF",
+            "total_price": 388453,
+            "first_down": 30403,
+            "second_down": 30403,
+            "third_down": 10403
+        },
+        {
+            "id": 7,
+            "grade": "4AF",
+            "total_price": 300453,
+            "first_down": 30403,
+            "second_down": 30403,
+            "third_down": 10403
+        }
+    ],
+    
+    "school": [
+        {
+            "id": 1,
+            "name": "Sacre Coeur",
+            "address": "#45, Rue Bartelemy, Petion-ville, Haiti",
+            "phone_number3": "+509 3645-4390",
+            "phone_number2": "+509 3145-4300",
+            "email": "school@gmail.com",
+            "email_support": "school_support@gmail.com",
+            "email_admin": "corsam28@gmail.com",
+            "meta_link": "",
+            "twitter_link": "",
+            "tnc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio",
+            "logo": "",
+            "owner_id": 11,
+            "profile": [
+                {
+                    "id": 1,
+                    "email": "test@gmail.com",
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "profession": "Teacher",
+                    "avatar": "",
+                    "address": "#45, Rue Bartelemy, Petion-ville, Haiti",
+                    "phone_number1": "+509 4445-4390",
+                    "phone_number2": "+509 3945-4777",
+                    "phone_support": null,
+                    "dob": "21-03-2024",
+                    "marital_status": "married"
+                }
+            ],
+            "level": [
+                "6me A.F",
+                "5me A.F",
+                "4me A.F",
+                "3me A.F",
+                "Seconde",
+                "Retho A",
+                "Retho C",
+                "Retho D",
+                "Philo"
+            ],
+            "teachers": [
+                "6me A.F",
+                "5me A.F",
+                "4me A.F",
+                "3me A.F",
+                "Seconde",
+                "Retho",
+                "Philo"
+            ],
+            "courses": [
+                {
+                    "id": 1,
+                    "level": "6me A.F",
+                    "classroom_name": "6me A.F Phoenix",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Mathematics",
+                    "modules": "coming very soon",
+                    "teacher": "Chris Brown"
+                },
+                {
+                    "id": 2,
+                    "level": "6me A.F",
+                    "classroom_name": "6me A.F monte",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Algerbe",
+                    "modules": "coming very soon",
+                    "teacher": "John Witt"
+                },
+                {
+                    "id": 3,
+                    "level": "6me A.F",
+                    "classroom_name": "6me A.F Brrd",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Anglais",
+                    "modules": "coming very soon",
+                    "teacher": "Samson Hill"
+                },
+                {
+                    "id": 4,
+                    "level": "6me A.F",
+                    "classroom_name": "6me A.F Phoenix1",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Sciences sociales",
+                    "modules": "coming very soon",
+                    "teacher": "Peter Witt"
+                },
+                {
+                    "id": 5,
+                    "level": "6me A.F",
+                    "classroom_name": "6me A.F Voye monte",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Mathematics",
+                    "modules": "coming very soon",
+                    "teacher": "Nelly ALexandre"
+                },
+                {
+                    "id": 5,
+                    "level": "6me A.F",
+                    "classroom_name": "6me A.F Brid",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Mathematics",
+                    "modules": "coming very soon",
+                    "teacher": "Peter Witt"
+                },
+                {
+                    "id": 6,
+                    "level": "Retho",
+                    "classroom_name": "L'avenir",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Litterature Haitienne",
+                    "modules": "coming very soon",
+                    "teacher": "Paul Witt"
+                },
+                {
+                    "id": 7,
+                    "level": "Philo",
+                    "classroom_name": "Les 100",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Trigonometrie",
+                    "modules": "coming very soon",
+                    "teacher": "Caroline Sharon"
+                },
+                {
+                    "id": 7,
+                    "level": "Philo",
+                    "classroom_name": "Les Aventuries",
+                    "short_description":  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum",
+                    "course_name": "Trigonometrie",
+                    "modules": "coming very soon",
+                    "teacher": "Caroline Sharon"
+                }
+            ]
+           
+        }
+    ]
+}
