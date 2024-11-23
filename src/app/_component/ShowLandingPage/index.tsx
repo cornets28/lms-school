@@ -3,6 +3,7 @@ import PublicNavbar from "@/components/global/layouts/PublicNavbar"
 import SloganAnDescription from "../SloganAndDescription"
 import CallToAction from "../CallToAction"
 import DashboardSnippet from "../DashboardSnippet"
+import Pricing from "../Pricing"
 
 const ShowLandingPage = () => {
   return (
@@ -11,6 +12,7 @@ const ShowLandingPage = () => {
       <SloganAnDescription />
       <CallToAction />
       <DashboardSnippet />
+      <Pricing />
     </>
   )
 }

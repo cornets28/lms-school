@@ -16,9 +16,9 @@ const SloganAnDescription = () => {
           <GradientText
             variant={isMobile? "h4" : "h2" }
             fontWeight="bold"
-            startColor={grey[500]}
+            startColor={grey[600]}
             midColor={white.main}
-            endColor={grey[500]}
+            endColor={grey[600]}
           >
             Metye m se Avni m
           </GradientText>

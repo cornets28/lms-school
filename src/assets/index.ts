@@ -47,6 +47,7 @@ import { Logout } from './svg/logout';
 import { Home } from './svg/home'
 import { CreditCard } from './svg/credit-card'
 import { Explore } from './svg/explore'
+import { Check } from "./svg/check";
 
 export {
   DashboardIcon,
@@ -91,9 +92,10 @@ export {
   SupportImg,
   MissionImg,
   QualityImg,
+  DashboardImg,
   Logout,
   Home,
   CreditCard,
   Explore,
-  DashboardImg
+  Check
 };

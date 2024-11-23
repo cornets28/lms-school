@@ -3,12 +3,12 @@ import { Box, useMediaQuery } from "@mui/material"
 import colors from "@/utils/theme/base/colors"
 import Text from "@/components/global/paragraph/Text"
 import typography from "@/utils/theme/base/typography"
-import { SCHOOL_CONSTANTS } from "@/contants"
+import { SCHOOL_CONSTANTS } from "@/constants"
 import { useNavigation } from "@/hooks/navigation"
 import Link from "next/link"
 
 const PublicMidNavItem = () => {
-  const { white, grey } = colors
+  const { white, grey, black} = colors
   const { size } = typography
   const matches = useMediaQuery("(min-width:600px)")
   const { section, onSetSection } = useNavigation()
@@ -17,7 +17,7 @@ const PublicMidNavItem = () => {
     <Box sx={{ pt: 0, px: matches ? 10 : 0 }}>
       <div
         style={{
-          backgroundColor: '#000000',
+          backgroundColor: black.main,
           borderRadius: 6,
           display: "flex",
           justifyContent: "center",
@@ -42,7 +42,7 @@ const PublicMidNavItem = () => {
               key={menuItem.id}
               style={{
                 border: `.2px solid ${white.main}`,
-                borderRadius: 4,
+                borderRadius: 7,
                 padding: "3px 12px",
                 margin: "0 1px",
                 transition: "all 0.3s ease",

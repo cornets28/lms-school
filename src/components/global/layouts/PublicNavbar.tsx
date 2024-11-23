@@ -87,7 +87,7 @@ const PublicNavbar = () => {
               textAlign="left"
               lineHeight={1.6}
               fontWeight={800}
-              text={t("Gruple.")}
+              text={t("HaySam.")}
             />
           </NavbarLogoContainer>
 
@@ -106,7 +106,7 @@ const PublicNavbar = () => {
                 textAlign="left"
                 lineHeight={1.6}
                 fontWeight={800}
-                text={t("Gruple.")}
+                text={t("HaySam.")}
               />
             </NavbarLogoContainer>
           )}
