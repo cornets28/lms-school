@@ -1,8 +1,9 @@
+import { SIGN_IN_FORM, SIGN_UP_FORM } from "./forms"
 import { LANDING_PAGE_MENU } from "./menus"
 import { SchoolConstantsTypes } from "@/types/SchoolConstantsTypes"
 
 export const SCHOOL_CONSTANTS: SchoolConstantsTypes = {
   landingPageMenu: LANDING_PAGE_MENU,
-  // signUpForm: SIGN_UP_FORM,
-  // signInForm: SIGN_IN_FORM,
+  signUpForm: SIGN_UP_FORM,
+  signInForm: SIGN_IN_FORM,
 }

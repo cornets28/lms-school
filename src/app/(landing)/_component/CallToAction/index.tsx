@@ -3,7 +3,7 @@ import colors from "@/utils/theme/base/colors"
 import { Container } from "@/components/mui/Container"
 import { Grid } from "@/components/mui/Grid"
 import { Box } from "@/components/mui/Box"
-import CustomButton from "@/components/global/buttons/CustomButton"
+import CustomButton from "@/components/buttons/CustomButton"
 import { purple } from "@mui/material/colors"
 import CustomLink from "@/components/global/customLink"
 import { Breakpoints } from "@/utils/constants/Constants"
@@ -35,11 +35,12 @@ const CallToAction = () => {
                 bgColor={grey[900]}
                 labelColor={grey[400]}
                 borderColor={grey[900]}
-                label="Watch Demo"
-              />
+              >
+                Watch Demo
+              </CustomButton>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: isMobile ? 2 : 0}}>
+          <Grid item xs={12} sm={6} sx={{ mt: isMobile ? 2 : 0 }}>
             <Box px={1} mx="auto">
               <CustomLink href="/sign-in">
                 <CustomButton
@@ -50,8 +51,9 @@ const CallToAction = () => {
                   bgColor={grey[100]}
                   labelColor={black.main}
                   borderColor={grey[100]}
-                  label="Get started"
-                />
+                >
+                  Get started
+                </CustomButton>
               </CustomLink>
             </Box>
           </Grid>

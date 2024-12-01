@@ -5,7 +5,7 @@ import CallToAction from "../CallToAction"
 import DashboardSnippet from "../DashboardSnippet"
 import Pricing from "../Pricing"
 
-const ShowLandingPage = () => {
+export const ShowLandingPage = () => {
   return (
     <>
       <PublicNavbar />
@@ -16,5 +16,3 @@ const ShowLandingPage = () => {
     </>
   )
 }
-
-export default ShowLandingPage

@@ -9,7 +9,7 @@ import { Box } from "@/components/mui/Box"
 import { Card } from "@/components/mui/Card"
 import { CardContent } from "@/components/mui/CardContent"
 import CustomLink from "@/components/global/customLink"
-import CustomButton from "@/components/global/buttons/CustomButton"
+import CustomButton from "@/components/buttons/CustomButton"
 
 type Props = {}
 
@@ -90,8 +90,9 @@ export const Pricing = (props: Props) => {
                 bgColor={purple[700]}
                 labelColor={grey[100]}
                 borderColor={purple[700]}
-                label="Start for free"
-              />
+              >
+                Start for free
+              </CustomButton>
             </CustomLink>
           </Box>
 
