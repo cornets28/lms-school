@@ -9,11 +9,13 @@ import customTheme from "@/utils/theme"
 import { Toaster } from "sonner"
 import { ReactQueryProvider } from "@/react-query/provider"
 import { ReduxProvider } from "@/redux/provider"
+import "./globals.css"
+
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "700"],
+  weight: ["300", "400", "500","600", "700"],
 })
 
 export default function ThemeRegistry({

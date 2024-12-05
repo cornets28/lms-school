@@ -48,6 +48,13 @@ import { Home } from './svg/home'
 import { CreditCard } from './svg/credit-card'
 import { Explore } from './svg/explore'
 import { Check } from "./svg/check";
+import { MegaPhone } from './svg/mega-phone';
+import { Heart } from './svg/heart';
+import { Chat } from './svg/chat';
+import { Grid } from './svg/grid';
+import { Document } from './svg/document';
+import { Courses } from './svg/courses';
+import { WhiteLabel } from './svg/white-label';
 
 export {
   DashboardIcon,
@@ -97,5 +104,12 @@ export {
   Home,
   CreditCard,
   Explore,
-  Check
+  Check,
+  MegaPhone,
+  Heart,
+  Chat,
+  Grid,
+  Document,
+  Courses,
+  WhiteLabel
 };

@@ -20,6 +20,6 @@ SuperBase:
 https://supabase.com/?utm_source=webprodigiesYoutubeChannel
 password: Education2024@!&&
 
-prisma commads:
+prisma commands:
 `yarn prisma generate`
 `yarn prisma db push`

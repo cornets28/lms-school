@@ -24,8 +24,8 @@ const InputOTP = forwardRef<
 ));
 InputOTP.displayName = "InputOTP";
 
-// InputOTPGroup using MUI's Box component
-const InputOTPGroup = forwardRef<
+// InputOTSchool using MUI's Box component
+const InputOTSchool = forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div">
 >(({ className, ...props }, ref) => (
@@ -39,7 +39,7 @@ const InputOTPGroup = forwardRef<
     {...props}
   />
 ));
-InputOTPGroup.displayName = "InputOTPGroup";
+InputOTSchool.displayName = "InputOTSchool";
 
 const InputOTPSlot = forwardRef<
   React.ElementRef<"div">,
@@ -113,4 +113,4 @@ const InputOTPSeparator = forwardRef<
 ));
 InputOTPSeparator.displayName = "InputOTPSeparator";
 
-export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };
+export { InputOTP, InputOTSchool, InputOTPSlot, InputOTPSeparator };

@@ -1,33 +1,33 @@
 "use client"
 
-import React, { useState } from "react";
-import { CircularProgress } from "@mui/material";
-import { useGoogleAuth } from "@/hooks/authentication";
-import CustomButton from "@/components/buttons/CustomButton";
-import colors from "@/utils/theme/base/colors";
-import Image from "next/image";
-import { GoogleIcon } from "@/assets";
-import { GoogleAuthButtonTypes } from "@/types/GoogleAuthButtonTypes";
+import React, { useState } from "react"
+import { CircularProgress } from "@mui/material"
+import { useGoogleAuth } from "@/hooks/authentication"
+import CustomButton from "@/components/buttons/CustomButton"
+import colors from "@/utils/theme/base/colors"
+import Image from "next/image"
+import { GoogleIcon } from "@/assets"
+import { GoogleAuthButtonTypes } from "@/types/GoogleAuthButtonTypes"
 
 export const GoogleAuthButton = ({ method }: GoogleAuthButtonTypes) => {
-  const { signUpWith, signInWith } = useGoogleAuth();
-  const { grey, skyBlue } = colors;
-  const [loading, setLoading] = useState(false);
+  const { signUpWith, signInWith } = useGoogleAuth()
+  const { grey, skyBlue, yellow } = colors
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleClick = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
       if (method === "signin") {
-        await signInWith("oauth_google");
+        await signInWith("oauth_google")
       } else {
-        await signUpWith("oauth_google");
+        await signUpWith("oauth_google")
       }
     } catch (error) {
-      console.error("Authentication failed:", error);
+      console.error("Authentication failed:", error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <CustomButton
@@ -41,7 +41,7 @@ export const GoogleAuthButton = ({ method }: GoogleAuthButtonTypes) => {
       isDisabled={loading}
     >
       {loading ? (
-        <CircularProgress size={20} color="inherit" />
+        <CircularProgress size={20} sx={{ color: yellow[900], mb: -0.5 }} />
       ) : (
         <>
           <Image
@@ -52,11 +52,15 @@ export const GoogleAuthButton = ({ method }: GoogleAuthButtonTypes) => {
             priority
             style={{ marginBottom: -4, marginRight: 8 }}
           />
-          <span>Anrejitre ak Google</span>
+          {method === "signin" ? (
+            <span>Antre ak Google</span>
+          ) : (
+            <span>Anrejitre ak Google</span>
+          )}
         </>
       )}
     </CustomButton>
-  );
-};
+  )
+}
 
-export default GoogleAuthButton;
+export default GoogleAuthButton

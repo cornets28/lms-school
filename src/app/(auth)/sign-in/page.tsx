@@ -6,11 +6,11 @@ import colors from "@/utils/theme/base/colors"
 import Text from "@/components/global/paragraph/Text"
 import typography from "@/utils/theme/base/typography"
 import { Box } from "@/components/mui/Box"
-import { Divider } from "@/components/mui/Divider"
+import OrContinueWith from "@/components/ui/orContinueWith"
 
 
 const SignInPage = () => {
-  const { grey, white } = colors
+  const { grey } = colors
   const { size } = typography
 
   return (
@@ -36,29 +36,12 @@ const SignInPage = () => {
         tag="p"
         textAlign="left"
         fontWeight={300}
-        text="Network with people from around the world, join groups, create your own,
+        text="Network with people from around the world, join schools, create your own,
         watch courses and become the best version of yourself."
       />
       <SignInForm />
-      <Box sx={{ position: "relative", my: 3 }}>
-        <Divider sx={{ bgcolor: grey[500] }} />
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: white.main,
-            px: 2,
-            py: 0.5,
-            fontSize: 12,
-            color: grey[600],
-          }}
-        >
-          OR CONTINUE WITH
-        </Box>
-      </Box>
-      <GoogleAuthButton method="signin" />
+      <OrContinueWith text="OR CONTINUE WITH" />
+      <GoogleAuthButton method="signin"/>
     </Box>
   )
 }

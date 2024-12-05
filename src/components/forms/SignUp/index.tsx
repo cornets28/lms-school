@@ -130,7 +130,7 @@ const SignUpForm = () => {
                 "Generate Code"
               )}
             </CustomButton>
-            <Box mt={1}>
+            <Box mt={4}>
               <TextAndLink
                 description="Already have an account?"
                 routeName="Antre"

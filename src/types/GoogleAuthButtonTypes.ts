@@ -1,3 +1,3 @@
 export type GoogleAuthButtonTypes = {
-  method: "signup" | "signin"
+  method: "signup" | "signin";
 }

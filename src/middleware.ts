@@ -9,7 +9,7 @@ export default clerkMiddleware(async (auth, req) => {
   const reqPath = req.nextUrl.pathname
   const origin = req.nextUrl.origin
   // @ts-ignore
-  if (isProtectedRoute(req)) auth().protect()
+  // if (isProtectedRoute(req)) auth().protect()
   if (!baseHost.includes(host as string) && reqPath.includes("/school")) {
     const response = await fetch(`${origin}/api/domain?host=${host}`, {
       method: "GET",

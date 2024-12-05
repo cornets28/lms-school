@@ -1,6 +1,6 @@
 export type MissionAndValuesType = {
-  header: string;
+  // header: string;
   header2: string;
-  coreValues: string[];
+  list: any;
   schoolMissionDescription: string;
 };
