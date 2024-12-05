@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
 export type CustomButtonType = {
-    label: ReactElement<any, any> | string | undefined;
+    children: ReactNode;
     bgColor?: string | undefined;
     bgColorHover: string;
     isDisabled?: boolean | undefined;
@@ -11,4 +11,5 @@ export type CustomButtonType = {
     labelColorHover?: string | undefined;
     borderColorHover?: string | undefined;
     onClick?: any
+    type?: "submit"
 }
