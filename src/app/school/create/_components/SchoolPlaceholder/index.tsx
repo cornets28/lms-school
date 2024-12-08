@@ -22,7 +22,7 @@ const SchoolPlaceholder: FC<MissionAndValuesType> = ({
   header2,
 }) => {
   const { grey, purple } = colors
-  const { size, h4 } = typography
+  const { size, h4, h5 } = typography
   const isMobile = useMediaQuery(`(min-width:${Breakpoints.sm})`)
 
   return (
@@ -34,6 +34,14 @@ const SchoolPlaceholder: FC<MissionAndValuesType> = ({
         }}
       >
         <CardContent>
+          <Text
+            fontSize={h5}
+            color={purple[700]}
+            tag="div"
+            textAlign="left"
+            fontWeight={900}
+            text="HaySam."
+          />
           <Text
             fontSize={h4}
             color={purple[700]}
