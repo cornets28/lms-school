@@ -1,5 +1,5 @@
 import { StripeElements } from "@/components/global/stripe/elements"
-import PaymentForm from "./payment-form"
+import PaymentForm from "./paymentForm"
 
 type Props = {
   userId: string

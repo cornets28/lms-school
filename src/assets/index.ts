@@ -56,6 +56,13 @@ import { Document } from './svg/document';
 import { Courses } from './svg/courses';
 import { WhiteLabel } from './svg/white-label';
 
+import { Music } from './svg/music';
+import { LifeStyle } from './svg/life-style';
+import { SocialMedia } from './svg/social-media';
+import { PersonalDevelopment } from './svg/personal-development';
+import { Buisness } from './svg/buisness';
+import { Fitness } from './svg/fitness';
+
 export {
   DashboardIcon,
   Logo,
@@ -111,5 +118,11 @@ export {
   Grid,
   Document,
   Courses,
-  WhiteLabel
+  WhiteLabel,
+  Music,
+  Fitness,
+  PersonalDevelopment,
+  Buisness,
+  LifeStyle,
+  SocialMedia
 };

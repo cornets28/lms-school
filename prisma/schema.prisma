@@ -4,6 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,6 +15,7 @@ datasource db {
 }
 
 enum USER_ROLE {
+  OWNER
   STUDENT
   TEACHER
   ADMIN
@@ -21,32 +23,23 @@ enum USER_ROLE {
 }
 
 model User {
-  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  firstname         String
-  lastname          String
-  email             String?              @unique
-  role              USER_ROLE           @default(STUDENT)
-  image             String?
-  createdAt         DateTime            @default(now())
-  clerkId           String              @unique
-  stripeId          String?
-  school            School?             @relation("StudentSchool", fields: [schoolId], references: [id])
-  schoolId          String?             @db.Uuid
-  teacherSchool     School?             @relation("TeacherSchool", fields: [teacherSchoolId], references: [id])
-  teacherSchoolId   String?             @db.Uuid
- 
-  ownedSchools      School[]            @relation("SchoolOwner")
-  membership        Members[]
-  enrollments       Enrollment[]
-  grades            Grade[]
-  posts             Post[]
-  likes             Like[]
-  comments          Comment[]
-  sectionProgress   SectionProgress[]
-  messages          Message[]
-  attendance        Attendance[]
-  TeacherAssignment TeacherAssignment[]
-  Schedule          Schedule[]
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstname String
+  lastname  String
+  email     String?  @unique
+  dob       String?  
+  createdAt DateTime @default(now())
+  clerkId   String   @unique
+  image     String?
+  stripeId  String?
+  role      USER_ROLE     @default(STUDENT)
+
+  school      School[]
+  membership  Members[]
+  posts       Post[]
+  likes       Like[]
+  comments    Comment[]
+  message     Message[]
 }
 
 model Subscription {
@@ -54,49 +47,42 @@ model Subscription {
   createdAt DateTime @default(now())
   price     Int?
   active    Boolean  @default(false)
-  school    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  School    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   schoolId  String?  @db.Uuid
 }
 
 model School {
   id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name            String         @unique
-  address         String?
-  city            String?
-  country         String?
-  contactEmail    String?
   category        String
-  description     String?
-  createdAt       DateTime       @default(now())
   thumbnail       String?
+  description     String?
   gallery         String[]
   jsonDescription String?
   htmlDescription String?
   icon            String?
-  privacy         SCHOOL_PRIVACY @default(PRIVATE)
-  active          Boolean        @default(false)
-  owner           User           @relation("SchoolOwner", fields: [userId], references: [id], onDelete: Cascade)
-  userId          String         @db.Uuid
-  affiliate       Affiliate?
   member          Members[]
   channel         Channel[]
-  students        User[]         @relation("StudentSchool")
-  teachers        User[]         @relation("TeacherSchool")
+  privacy         SCHOOL_PRIVACY  @default(PRIVATE)
+  active          Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  User            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String         @db.Uuid
   courses         Course[]
+  affiliate       Affiliate?
   domain          String?
-  subscriptions   Subscription[]
+  subscription    Subscription[]
 }
 
 model Members {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  user      User?    @relation(fields: [userId], references: [id])
+  User      User?    @relation(fields: [userId], references: [id])
   userId    String?  @db.Uuid
-  school    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  School    School?  @relation(fields: [schoolId], references: [id])
   schoolId  String?  @db.Uuid
-  groupId   String?  @db.Uuid
   createdAt DateTime @default(now())
 
-  @@index([userId, groupId])
+  @@index([userId, schoolId])
 }
 
 model Post {
@@ -132,50 +118,10 @@ model Comment {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String    @db.Uuid
   replied   Boolean?  @default(false)
+  //self relation 1 to many for comments
   reply     Comment[] @relation(name: "CommentToComment")
-  comment   Comment?  @relation(name: "CommentToComment", fields: [commentId], references: [id])
+  Comment   Comment?  @relation(name: "CommentToComment", fields: [commentId], references: [id])
   commentId String?   @db.Uuid
-}
-
-model Grade {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  student   User     @relation(fields: [studentId], references: [id])
-  studentId String   @db.Uuid
-  course    Course   @relation(fields: [courseId], references: [id])
-  courseId  String   @db.Uuid
-  grade     Float
-  remarks   String?
-  gradedAt  DateTime @default(now())
-}
-
-model TeacherAssignment {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  teacher    User     @relation(fields: [teacherId], references: [id])
-  teacherId  String   @db.Uuid
-  course     Course   @relation(fields: [courseId], references: [id])
-  courseId   String   @db.Uuid
-  assignedAt DateTime @default(now())
-}
-
-model Schedule {
-  id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  course     Course       @relation(fields: [courseId], references: [id])
-  courseId   String       @db.Uuid
-  date       DateTime
-  topic      String
-  teacher    User         @relation(fields: [teacherId], references: [id])
-  teacherId  String       @db.Uuid
-  Attendance Attendance[]
-}
-
-model Attendance {
-  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  user       User      @relation(fields: [userId], references: [id])
-  userId     String    @db.Uuid
-  schedule   Schedule  @relation(fields: [scheduleId], references: [id])
-  scheduleId String    @db.Uuid
-  attended   Boolean   @default(false)
-  attendedAt DateTime?
 }
 
 model Channel {
@@ -184,44 +130,29 @@ model Channel {
   icon      String
   posts     Post[]
   createdAt DateTime @default(now())
-  school    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  School    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   schoolId  String?  @db.Uuid
 }
 
 model Course {
-  id                 String              @id @db.Uuid
-  name               String
-  description        String
-  thumbnail          String?
-  published          Boolean             @default(false)
-  privacy            String
-  createdAt          DateTime            @default(now())
-  school             School?             @relation(fields: [schoolId], references: [id], onDelete: Cascade)
-  schoolId           String?             @db.Uuid
-  modules            Module[]
-  enrollments        Enrollment[]
-  grades             Grade[]
-  teacherAssignments TeacherAssignment[]
-  schedules          Schedule[]
-}
-
-model Enrollment {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String   @db.Uuid
-  course     Course   @relation(fields: [courseId], references: [id])
-  courseId   String   @db.Uuid
-  enrolledAt DateTime @default(now())
-
-  @@index([userId, courseId])
+  id          String   @id @db.Uuid
+  name        String
+  thumbnail   String
+  published   Boolean  @default(false)
+  privacy     String
+  description String
+  createdAt   DateTime @default(now())
+  School      School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  schoolId    String?  @db.Uuid
+  modules     Module[]
 }
 
 model Module {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  course    Course?   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  id        String    @id @db.Uuid
+  Course    Course?   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId  String?   @db.Uuid
   title     String
-  sections  Section[]
+  section   Section[]
   createdAt DateTime  @default(now())
 }
 
@@ -231,29 +162,16 @@ model Section {
   icon        String   @default("doc")
   complete    Boolean  @default(false)
   createdAt   DateTime @default(now())
-  module      Module?  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  Module      Module?  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   moduleId    String?  @db.Uuid
   content     String?
   htmlContent String?
-  jsonContent String?
-
-  // Specify the relation name explicitly on both ends of the relation.
-  progress SectionProgress[] @relation("SectionProgressSection")
-}
-
-model SectionProgress {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String   @db.Uuid
-  section     Section  @relation("SectionProgressSection", fields: [sectionId], references: [id])
-  sectionId   String   @db.Uuid
-  completedAt DateTime @default(now())
-  score       Float
+  JsonContent String?
 }
 
 model Affiliate {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  school    School?  @relation(fields: [schoolId], references: [id])
+  School    School?  @relation(fields: [schoolId], references: [id])
   schoolId  String?  @unique @db.Uuid
   createdAt DateTime @default(now())
 }
@@ -268,6 +186,282 @@ model Message {
 }
 
 enum SCHOOL_PRIVACY {
-  PRIVATE
   PUBLIC
+  PRIVATE
 }
+
+
+
+
+
+
+
+
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// enum USER_ROLE {
+//   STUDENT
+//   TEACHER
+//   ADMIN
+//   SUPER_ADMIN
+// }
+
+// model User {
+//   id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   firstname         String
+//   lastname          String
+//   email             String?              @unique
+//   role              USER_ROLE           @default(STUDENT)
+//   image             String?
+//   createdAt         DateTime            @default(now())
+//   clerkId           String              @unique
+//   stripeId          String?
+//   school            School?             @relation("StudentSchool", fields: [schoolId], references: [id])
+//   schoolId          String?             @db.Uuid
+//   teacherSchool     School?             @relation("TeacherSchool", fields: [teacherSchoolId], references: [id])
+//   teacherSchoolId   String?             @db.Uuid
+ 
+//   ownedSchools      School[]            @relation("SchoolOwner")
+//   membership        Members[]
+//   enrollments       Enrollment[]
+//   grades            Grade[]
+//   posts             Post[]
+//   likes             Like[]
+//   comments          Comment[]
+//   sectionProgress   SectionProgress[]
+//   messages          Message[]
+//   attendance        Attendance[]
+//   TeacherAssignment TeacherAssignment[]
+//   Schedule          Schedule[]
+// }
+
+// model Subscription {
+//   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   createdAt DateTime @default(now())
+//   price     Int?
+//   active    Boolean  @default(false)
+//   school    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+//   schoolId  String?  @db.Uuid
+// }
+
+// model School {
+//   id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   name            String         @unique
+//   address         String?
+//   city            String?
+//   country         String?
+//   contactEmail    String?
+//   category        String
+//   description     String?
+//   createdAt       DateTime       @default(now())
+//   thumbnail       String?
+//   gallery         String[]
+//   jsonDescription String?
+//   htmlDescription String?
+//   icon            String?
+//   privacy         SCHOOL_PRIVACY @default(PRIVATE)
+//   active          Boolean        @default(false)
+//   owner           User           @relation("SchoolOwner", fields: [userId], references: [id], onDelete: Cascade)
+//   userId          String         @db.Uuid
+//   affiliate       Affiliate?
+//   member          Members[]
+//   channel         Channel[]
+//   students        User[]         @relation("StudentSchool")
+//   teachers        User[]         @relation("TeacherSchool")
+//   courses         Course[]
+//   domain          String?
+//   subscriptions   Subscription[]
+// }
+
+// model Members {
+//   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   user      User?    @relation(fields: [userId], references: [id])
+//   userId    String?  @db.Uuid
+//   school    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+//   schoolId  String?  @db.Uuid
+//   groupId   String?  @db.Uuid
+//   createdAt DateTime @default(now())
+
+//   @@index([userId, groupId])
+// }
+
+// model Post {
+//   id          String    @id @db.Uuid
+//   createdAt   DateTime  @default(now())
+//   title       String?
+//   htmlContent String?
+//   jsonContent String?
+//   content     String
+//   author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+//   authorId    String    @db.Uuid
+//   likes       Like[]
+//   comments    Comment[]
+//   channel     Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
+//   channelId   String    @db.Uuid
+// }
+
+// model Like {
+//   id        String   @id @db.Uuid
+//   createdAt DateTime @default(now())
+//   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+//   postId    String   @db.Uuid
+//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   userId    String   @db.Uuid
+// }
+
+// model Comment {
+//   id        String    @id @db.Uuid
+//   createdAt DateTime  @default(now())
+//   content   String
+//   post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+//   postId    String    @db.Uuid
+//   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   userId    String    @db.Uuid
+//   replied   Boolean?  @default(false)
+//   reply     Comment[] @relation(name: "CommentToComment")
+//   comment   Comment?  @relation(name: "CommentToComment", fields: [commentId], references: [id])
+//   commentId String?   @db.Uuid
+// }
+
+// model Grade {
+//   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   student   User     @relation(fields: [studentId], references: [id])
+//   studentId String   @db.Uuid
+//   course    Course   @relation(fields: [courseId], references: [id])
+//   courseId  String   @db.Uuid
+//   grade     Float
+//   remarks   String?
+//   gradedAt  DateTime @default(now())
+// }
+
+// model TeacherAssignment {
+//   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   teacher    User     @relation(fields: [teacherId], references: [id])
+//   teacherId  String   @db.Uuid
+//   course     Course   @relation(fields: [courseId], references: [id])
+//   courseId   String   @db.Uuid
+//   assignedAt DateTime @default(now())
+// }
+
+// model Schedule {
+//   id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   course     Course       @relation(fields: [courseId], references: [id])
+//   courseId   String       @db.Uuid
+//   date       DateTime
+//   topic      String
+//   teacher    User         @relation(fields: [teacherId], references: [id])
+//   teacherId  String       @db.Uuid
+//   Attendance Attendance[]
+// }
+
+// model Attendance {
+//   id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   user       User      @relation(fields: [userId], references: [id])
+//   userId     String    @db.Uuid
+//   schedule   Schedule  @relation(fields: [scheduleId], references: [id])
+//   scheduleId String    @db.Uuid
+//   attended   Boolean   @default(false)
+//   attendedAt DateTime?
+// }
+
+// model Channel {
+//   id        String   @id @db.Uuid
+//   name      String
+//   icon      String
+//   posts     Post[]
+//   createdAt DateTime @default(now())
+//   school    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+//   schoolId  String?  @db.Uuid
+// }
+
+// model Course {
+//   id                 String              @id @db.Uuid
+//   name               String
+//   description        String
+//   thumbnail          String?
+//   published          Boolean             @default(false)
+//   privacy            String
+//   createdAt          DateTime            @default(now())
+//   school             School?             @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+//   schoolId           String?             @db.Uuid
+//   modules            Module[]
+//   enrollments        Enrollment[]
+//   grades             Grade[]
+//   teacherAssignments TeacherAssignment[]
+//   schedules          Schedule[]
+// }
+
+// model Enrollment {
+//   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   user       User     @relation(fields: [userId], references: [id])
+//   userId     String   @db.Uuid
+//   course     Course   @relation(fields: [courseId], references: [id])
+//   courseId   String   @db.Uuid
+//   enrolledAt DateTime @default(now())
+
+//   @@index([userId, courseId])
+// }
+
+// model Module {
+//   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   course    Course?   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+//   courseId  String?   @db.Uuid
+//   title     String
+//   sections  Section[]
+//   createdAt DateTime  @default(now())
+// }
+
+// model Section {
+//   id          String   @id @db.Uuid
+//   name        String   @default("New Section")
+//   icon        String   @default("doc")
+//   complete    Boolean  @default(false)
+//   createdAt   DateTime @default(now())
+//   module      Module?  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+//   moduleId    String?  @db.Uuid
+//   content     String?
+//   htmlContent String?
+//   jsonContent String?
+
+//   // Specify the relation name explicitly on both ends of the relation.
+//   progress SectionProgress[] @relation("SectionProgressSection")
+// }
+
+// model SectionProgress {
+//   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   user        User     @relation(fields: [userId], references: [id])
+//   userId      String   @db.Uuid
+//   section     Section  @relation("SectionProgressSection", fields: [sectionId], references: [id])
+//   sectionId   String   @db.Uuid
+//   completedAt DateTime @default(now())
+//   score       Float
+// }
+
+// model Affiliate {
+//   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   school    School?  @relation(fields: [schoolId], references: [id])
+//   schoolId  String?  @unique @db.Uuid
+//   createdAt DateTime @default(now())
+// }
+
+// model Message {
+//   id         String   @id @db.Uuid
+//   message    String
+//   createdAt  DateTime @default(now())
+//   sender     User?    @relation(fields: [senderid], references: [id], onDelete: Cascade)
+//   senderid   String?  @db.Uuid
+//   recieverId String?  @db.Uuid
+// }
+
+// enum SCHOOL_PRIVACY {
+//   PRIVATE
+//   PUBLIC
+// }

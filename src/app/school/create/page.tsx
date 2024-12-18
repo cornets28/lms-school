@@ -6,14 +6,14 @@ import { Grid } from "@/components/mui/Grid"
 import colors from "@/utils/theme/base/colors"
 import typography from "@/utils/theme/base/typography"
 import Text from "@/components/global/paragraph/Text"
-import { onGetAffiliateInfo } from "@/actions/school"
+import { onGetAffiliateInfo } from "@/actions/schools"
 import { Box } from "@/components/mui/Box"
 import { redirect } from "next/navigation"
 import { onAuthenticatedUser } from "@/actions/auth"
 import { User as UserIcon } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { UserImage } from "@/assets"
 import Container from "@mui/material/Container"
+import CreateSchool from "@/components/forms/CreateSchool"
 
 const SchoolCreatePage = async ({
   searchParams,
@@ -49,7 +49,8 @@ const SchoolCreatePage = async ({
             sx={{
               borderRadius: 3,
               boxShadow: "1px 1px 25px rgba(11, 55, 101, 0.1)",
-              minHeight: 350 // TODO change this in the future
+              // minHeight: 400,
+              mb: 3
             }}
           >
             <CardContent>
@@ -69,7 +70,7 @@ const SchoolCreatePage = async ({
                   textAlign="left"
                   fontWeight={600}
                   text="Free for 14 days, then $99/month. Cancel anytime. All features.
-          Unlimited everything. No hidden fees."
+                    Unlimited everything. No hidden fees."
                   variant="body1"
                 />
               </Box>
@@ -91,18 +92,22 @@ const SchoolCreatePage = async ({
                   You were referred by
                   <Avatar>
                     <AvatarImage
-                      src={affiliate.user?.school?.owner.image as string}
+                      src={affiliate.affiliate?.School?.User.image as string}
                       alt="User"
                     />
                     <AvatarFallback>
-                      {!affiliate.user?.school?.owner.image && <UserIcon />}
+                      <UserIcon />
                     </AvatarFallback>
                   </Avatar>
-                  {`${affiliate.user?.school?.owner.firstname || ""} ${
-                    affiliate.user?.school?.owner.lastname || ""
-                  }`}
+                  {affiliate.affiliate?.School?.User.firstname}{" "}
+                  {affiliate.affiliate?.School?.User.lastname}
                 </Box>
               )}
+               <CreateSchool
+                userId={user.id}
+                affiliate={affiliate.status === 200 ? true : false}
+                stripeId={affiliate.affiliate?.School?.User.stripeId || ""}
+              />
             </CardContent>
           </Card>
         </Grid>

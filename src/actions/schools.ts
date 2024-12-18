@@ -8,16 +8,16 @@ import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 import { onAuthenticatedUser } from "./auth"
 
-export const onGetAffiliateInfo = async (id: string) => {
+export const onGetAffiliateInfo = async (affiliateId: string) => {
   try {
     const affiliateInfo = await client.affiliate.findUnique({
       where: {
-        id,
+        id: affiliateId,
       },
       select: {
-        school: {
+        School: {
           select: {
-            owner: {
+            User: {
               select: {
                 firstname: true,
                 lastname: true,
@@ -32,7 +32,7 @@ export const onGetAffiliateInfo = async (id: string) => {
     })
 
     if (affiliateInfo) {
-      return { status: 200, user: affiliateInfo }
+      return { status: 200, affiliate: affiliateInfo }
     }
 
     return { status: 404 }
@@ -41,77 +41,77 @@ export const onGetAffiliateInfo = async (id: string) => {
   }
 }
 
-// export const onCreateNewShool = async (
-//   userId: string,
-//   data: z.infer<typeof CreateSchoolSchema>,
-// ) => {
-//   try {
-//     const created = await client.user.update({
-//       where: {
-//         id: userId,
-//       },
-//       data: {
-//         school: {
-//           create: {
-//             ...data,
-//             affiliate: {
-//               create: {},
-//             },
-//             member: {
-//               create: {
-//                 userId: userId,
-//               },
-//             },
-//             channel: {
-//               create: [
-//                 {
-//                   id: uuidv4(),
-//                   name: "general",
-//                   icon: "general",
-//                 },
-//                 {
-//                   id: uuidv4(),
-//                   name: "announcements",
-//                   icon: "announcement",
-//                 },
-//               ],
-//             },
-//           },
-//         },
-//       },
-//       select: {
-//         id: true,
-//         school: {
-//           select: {
-//             id: true,
-//             channel: {
-//               select: {
-//                 id: true,
-//               },
-//               take: 1,
-//               orderBy: {
-//                 createdAt: "asc",
-//               },
-//             },
-//           },
-//         },
-//       },
-//     })
+export const onCreateNewSchool = async (
+  userId: string,
+  data: z.infer<typeof CreateSchoolSchema>,
+) => {
+  try {
+    const created = await client.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        school: {
+          create: {
+            ...data,
+            affiliate: {
+              create: {},
+            },
+            member: {
+              create: {
+                userId: userId,
+              },
+            },
+            channel: {
+              create: [
+                {
+                  id: uuidv4(),
+                  name: "general",
+                  icon: "general",
+                },
+                {
+                  id: uuidv4(),
+                  name: "announcements",
+                  icon: "announcement",
+                },
+              ],
+            },
+          },
+        },
+      },
+      select: {
+        id: true,
+        school: {
+          select: {
+            id: true,
+            channel: {
+              select: {
+                id: true,
+              },
+              take: 1,
+              orderBy: {
+                createdAt: "asc",
+              },
+            },
+          },
+        },
+      },
+    })
 
-//     if (created) {
-//       return {
-//         status: 200,
-//         data: created,
-//         message: "Group created successfully",
-//       }
-//     }
-//   } catch (error) {
-//     return {
-//       status: 400,
-//       message: "Oops! group creation failed, try again later",
-//     }
-//   }
-// }
+    if (created) {
+      return {
+        status: 200,
+        data: created,
+        message: "Group created successfully",
+      }
+    }
+  } catch (error) {
+    return {
+      status: 400,
+      message: "Oops! group creation failed, try again later",
+    }
+  }
+}
 
 // export const onGetGroupInfo = async (schoolid: string) => {
 //   try {
@@ -764,7 +764,6 @@ export const onGetAffiliateInfo = async (id: string) => {
 //     return { status: 400 }
 //   }
 // }
-
 
 // export const onAddCustomDomain = async (groupid: string, domain: string) => {
 //   try {
