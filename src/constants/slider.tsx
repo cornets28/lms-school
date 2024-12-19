@@ -22,44 +22,26 @@ export const SCHOOL_LIST: SchoolListTypes[] = [
   },
   {
     id: "1",
-    label: "Primary School",
+    label: "Fitness",
     icon: <Fitness />,
     path: "fitness",
   },
   {
     id: "2",
-    label: "Technical School",
+    label: "Music",
     icon: <Music />,
     path: "music",
   },
   {
     id: "3",
-    label: "University",
+    label: "Buisness",
     icon: <Buisness />,
     path: "buisness",
   },
   {
     id: "4",
-    label: "Training",
+    label: "Lifestyle",
     icon: <LifeStyle />,
     path: "lifestyle",
   },
-  // {
-  //   id: "5",
-  //   label: "Personal Development",
-  //   icon: <PersonalDevelopment />,
-  //   path: "personal-development",
-  // },
-  // {
-  //   id: "6",
-  //   label: "Social Media",
-  //   icon: <SocialMedia />,
-  //   path: "social-media",
-  // },
-  // {
-  //   id: "7",
-  //   label: "Tech",
-  //   icon: <Tech />,
-  //   path: "tech",
-  // },
 ]

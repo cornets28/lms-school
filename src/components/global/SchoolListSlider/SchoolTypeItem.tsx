@@ -11,15 +11,20 @@ export const SchoolTypeItem = ({
 }: SchoolTypeItemTypes) => {
   const { purple, grey } = colors
 
+  const capitalizeFirstLetter = (str: string) =>{
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   return (
     <Box
       sx={{
-        bgcolor: selected === label ? purple[200] : purple[100],
+        bgcolor: selected && capitalizeFirstLetter(selected) === label ? purple[200] : purple[100],
         display: "flex",
         gap: 1,
         p: 1,
         cursor: "pointer",
-        border: `1px solid ${selected === label ? "green" : "red"}`,
+        border: `1px solid ${selected && capitalizeFirstLetter(selected) === label ? purple[200] : purple[100]}`,
         borderRadius: 2,
         color: grey[100]
       }}
