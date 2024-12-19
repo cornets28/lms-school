@@ -48,6 +48,20 @@ import { Home } from './svg/home'
 import { CreditCard } from './svg/credit-card'
 import { Explore } from './svg/explore'
 import { Check } from "./svg/check";
+import { MegaPhone } from './svg/mega-phone';
+import { Heart } from './svg/heart';
+import { Chat } from './svg/chat';
+import { Grid } from './svg/grid';
+import { Document } from './svg/document';
+import { Courses } from './svg/courses';
+import { WhiteLabel } from './svg/white-label';
+
+import { Music } from './svg/music';
+import { LifeStyle } from './svg/life-style';
+import { SocialMedia } from './svg/social-media';
+import { PersonalDevelopment } from './svg/personal-development';
+import { Buisness } from './svg/buisness';
+import { Fitness } from './svg/fitness';
 
 export {
   DashboardIcon,
@@ -97,5 +111,18 @@ export {
   Home,
   CreditCard,
   Explore,
-  Check
+  Check,
+  MegaPhone,
+  Heart,
+  Chat,
+  Grid,
+  Document,
+  Courses,
+  WhiteLabel,
+  Music,
+  Fitness,
+  PersonalDevelopment,
+  Buisness,
+  LifeStyle,
+  SocialMedia
 };
