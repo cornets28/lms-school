@@ -1,130 +1,133 @@
-// "use client"
-// import {
-//   onCreateNewGroup,
+"use client"
+
+import {
+  onCreateNewSchool,
 //   onGetGroupChannels,
 //   onGetGroupSubscriptions,
 //   onJoinGroup,
-// } from "@/actions/groups"
-// import {
+} from "@/actions/schools"
+import {
 //   onActivateSubscription,
-//   onCreateNewGroupSubscription,
+//SchoolSubscription,
 //   onGetActiveSubscription,
 //   onGetGroupSubscriptionPaymentIntent,
-//   onGetStripeClientSecret,
-//   onTransferCommission,
-// } from "@/actions/payments"
-// import { CreateGroupSchema } from "@/components/forms/create-group/schema"
+  onGetStripeClientSecret,
+  onTransferCommission,
+} from "@/actions/payments"
+import { CreateSchoolSchema } from "@/components/forms/CreateSchool/schema"
 // import { CreateGroupSubscriptionSchema } from "@/components/forms/subscription/schema"
-// import { zodResolver } from "@hookform/resolvers/zod"
-// import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
-// import { StripeCardElement, loadStripe } from "@stripe/stripe-js"
-// import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-// import axios from "axios"
-// import { useRouter } from "next/navigation"
-// import { useEffect, useState } from "react"
-// import { useForm } from "react-hook-form"
-// import { toast } from "sonner"
-// import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import { StripeCardElement, loadStripe } from "@stripe/stripe-js"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import axios from "axios"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
 
-// export const useStripeElements = () => {
-//   const StripePromise = async () =>
-//     await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY as string)
+export const useStripeElements = () => {
+  const StripePromise = async () =>
+    await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY as string)
 
-//   return { StripePromise }
-// }
+  return { StripePromise }
+}
 
-// export const usePayments = (
-//   userId: string,
-//   affiliate: boolean,
-//   stripeId?: string,
-// ) => {
-//   const [isCategory, setIsCategory] = useState<string | undefined>(undefined)
-//   const stripe = useStripe()
-//   const elements = useElements()
-//   const router = useRouter()
+export const usePayments = (
+  userId: string,
+  affiliate: boolean,
+  stripeId?: string,
+) => {
+  const [isCategory, setIsCategory] = useState<string | undefined>(undefined)
+  const stripe = useStripe()
+  const elements = useElements()
+  const router = useRouter()
 
-//   const {
-//     reset,
-//     handleSubmit,
-//     formState: { errors },
-//     register,
-//     watch,
-//   } = useForm<z.infer<typeof CreateGroupSchema>>({
-//     resolver: zodResolver(CreateGroupSchema),
-//     defaultValues: {
-//       category: "",
-//     },
-//   })
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+    register,
+    watch,
+  } = useForm<z.infer<typeof CreateSchoolSchema>>({
+    resolver: zodResolver(CreateSchoolSchema),
+    defaultValues: {
+      category: "",
+    },
+  })
 
-//   useEffect(() => {
-//     const category = watch(({ category }) => {
-//       if (category) {
-//         setIsCategory(category)
-//       }
-//     })
-//     return () => category.unsubscribe()
-//   }, [watch])
+  console.log("isCategory: ", isCategory)
 
-//   const { data: Intent, isPending: creatingIntent } = useQuery({
-//     queryKey: ["payment-intent"],
-//     queryFn: () => onGetStripeClientSecret(),
-//   })
+  useEffect(() => {
+    const category = watch(({ category }) => {
+      if (category) {
+        setIsCategory(category)
+      }
+    })
+    return () => category.unsubscribe()
+  }, [watch])
 
-//   const { mutateAsync: createGroup, isPending } = useMutation({
-//     mutationFn: async (data: z.infer<typeof CreateGroupSchema>) => {
-//       if (!stripe || !elements || !Intent) {
-//         return null
-//       }
+  const { data: Intent, isPending: creatingIntent } = useQuery({
+    queryKey: ["payment-intent"],
+    queryFn: () => onGetStripeClientSecret(),
+  })
 
-//       const { error, paymentIntent } = await stripe.confirmCardPayment(
-//         Intent.secret!,
-//         {
-//           payment_method: {
-//             card: elements.getElement(CardElement) as StripeCardElement,
-//           },
-//         },
-//       )
+  const { mutateAsync: createSchool , isPending } = useMutation({
+    mutationFn: async (data: z.infer<typeof CreateSchoolSchema>) => {
+      if (!stripe || !elements || !Intent) {
+        return null
+      }
 
-//       if (error) {
-//         return toast("Error", {
-//           description: "Oops! something went wrong, try again later",
-//         })
-//       }
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        Intent.secret!,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement) as StripeCardElement,
+          },
+        },
+      )
 
-//       if (paymentIntent?.status === "succeeded") {
-//         if (affiliate) {
-//           await onTransferCommission(stripeId!)
-//         }
-//         const created = await onCreateNewGroup(userId, data)
-//         if (created && created.status === 200) {
-//           toast("Success", {
-//             description: created.message,
-//           })
-//           router.push(
-//             `/group/${created.data?.group[0].id}/channel/${created.data?.group[0].channel[0].id}`,
-//           )
-//         }
-//         if (created && created.status !== 200) {
-//           reset()
-//           return toast("Error", {
-//             description: created.message,
-//           })
-//         }
-//       }
-//     },
-//   })
+      if (error) {
+        return toast("Error", {
+          description: "Oops! something went wrong, try again later",
+        })
+      }
 
-//   const onCreateGroup = handleSubmit(async (values) => createGroup(values))
+      if (paymentIntent?.status === "succeeded") {
+        if (affiliate) {
+          await onTransferCommission(stripeId!)
+        }
+        const created = await onCreateNewSchool(userId, data)
+        if (created && created.status === 200) {
+          toast("Success", {
+            description: created.message,
+          })
+          router.push(
+            `/school/${created.data?.school[0]?.id}/channel/${created.data?.school[0] ?.channel[0].id}`,
+          )
+        }
+        if (created && created.status !== 200) {
+          reset()
+          return toast("Error", {
+            description: created.message,
+          })
+        }
+      }
+    },
+  })
 
-//   return {
-//     onCreateGroup,
-//     isPending,
-//     register,
-//     errors,
-//     isCategory,
-//     creatingIntent,
-//   }
-// }
+  const onCreateSchool = handleSubmit(async (values) => createSchool(values))
+
+  return {
+    onCreateSchool,
+    isPending,
+    register,
+    errors,
+    isCategory,
+    creatingIntent,
+  }
+}
 
 // export const useActiveGroupSubscription = (groupId: string) => {
 //   const { data } = useQuery({

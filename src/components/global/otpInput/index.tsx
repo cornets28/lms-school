@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { Box } from "@/components/mui/Box"
-import { InputOTP, InputOTPSlot } from "@/components/ui/input-otp"
+import { InputOTP, InputOTPSlot } from "@/components/ui/InputOtp"
 import colors from "@/utils/theme/base/colors"
 import { OTPInputTypes } from "@/types/OTPInputTypes"
 

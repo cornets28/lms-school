@@ -42,7 +42,7 @@ const CallToAction = () => {
           </Grid>
           <Grid item xs={12} sm={6} sx={{ mt: isMobile ? 2 : 0 }}>
             <Box px={1} mx="auto">
-              <CustomLink href="/sign-in">
+              <CustomLink href="/sign-up">
                 <CustomButton
                   bgColorHover={purple[700]}
                   borderColorHover={purple[700]}

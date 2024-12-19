@@ -1,13 +1,11 @@
-import React from "react";
-import { CircularProgress, Box } from "@mui/material";
+import React from "react"
+import { CircularProgress, Box } from "@mui/material"
+import colors from "@/utils/theme/base/colors"
+import { PaymentLoaderTypes } from "@/types/PaymentLoaderTypes"
 
-type LoaderProps = {
-  loading: boolean;
-  children: React.ReactNode;
-  className?: string;
-};
+export const Loader = ({ loading, children, className }: PaymentLoaderTypes) => {
+  const { purple } = colors
 
-export const Loader = ({ loading, children, className }: LoaderProps) => {
   return loading ? (
     <Box
       className={className}
@@ -19,14 +17,14 @@ export const Loader = ({ loading, children, className }: LoaderProps) => {
       }}
     >
       <CircularProgress
-        size={40} 
+        size={40}
         sx={{
-          color: "yellow", 
+          color: purple[700],
           animationDuration: "1.4s",
         }}
       />
     </Box>
   ) : (
     <>{children}</>
-  );
-};
+  )
+}

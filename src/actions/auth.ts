@@ -95,13 +95,12 @@ export const onSignInUser = async (clerkId: string) => {
     })
 
     if (loggedInUser) {
-      const school = loggedInUser.school
-      if (school && school.channel.length > 0) {
+      if (loggedInUser.school.length > 0) {
         return {
           status: 207,
           id: loggedInUser.id,
-          schoolId: school.id,
-          channelId: school.channel[0].id,
+          schoolId: loggedInUser.school[0].id,
+          channelId: loggedInUser.school[0].channel[0].id,
         }
       }
 
